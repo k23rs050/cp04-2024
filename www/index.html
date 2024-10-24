@@ -38,6 +38,9 @@
         $('#btnC').click(function(e) {
             btnCClick(e);
         });
+        $('#btnD').click(function(e) {
+            btnDClick(e);
+        });
         init();
     });
     
@@ -88,7 +91,18 @@
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
-        ctx.stroke();        
+        ctx.stroke(); 
+         for(var i = 0; i < 12; i++){
+            px = getX(95, i/12, 0.7);
+            py = getY(105, i/12, 0.7);
+            var a = i;
+            if(a == 0){
+                a = 12;
+            }
+            ctx.fillText(""+a,px,py,15,"rgb(0,255,255)");
+
+        }
+       
     }    
     // 時計 clock(時, 分, 秒, 残り時間が短い時に不要な針を隠す)
     function clock(hour,minute,second,hide){
@@ -141,6 +155,17 @@
         var m = parseInt((rest-h*3600)/60);
         var s = parseInt(rest-h*3600-m*60);
         clock(h,m,s,true);
+         for(var i = 0; i < 12; i++){
+            px = getX(145, i/12, 0.85);
+            py = getY(160, i/12, 0.85);
+            var a = i;
+            if(a == 0){
+                a = 12;
+            }
+            ctx.fillText(""+a,px,py,15,"rgb(255,255,0)");
+
+        }
+
 
     }
 
@@ -158,6 +183,7 @@
         $('#btnA').prop('disabled', false);
         $('#btnB').prop('disabled', false);
         $('#btnC').prop('disabled', false);
+        $('#btnD').prop('disabled', false);
         
     }
 
@@ -194,8 +220,8 @@
     // ButtonBがクリックされた時の処理
     function btnBClick(e){
         active = false; 
-       
-        
+        $("body").css("background-color", "lightgrey");
+
     }
 
     // ButtonCがクリックされた時の処理
@@ -204,9 +230,15 @@
         active = false; 
         period = 60* parseInt( $("#minute").val() ) + parseInt( $("#second").val() );
          $("#time").html("経過時間： 0");
-         $("#remain").html("残り時間： " + period);  
-      
+         $("#remain").html("残り時間： " + period);
+         $("body").css("background-color", "green");
     }
+     function btnDClick(e){
+        active = false; 
+        $("#time").html(etime + "秒経過");
+        $("body").css("background-color", "blue");
+    }
+
     
  
     // 繰り返し実行する処理
@@ -219,6 +251,7 @@
                analog(rest);
         }
     } 
+
 
   </script>
 </head>
@@ -233,6 +266,7 @@
     <button id="btnA">Start</button>  
     <button id="btnB">Stop</button>  
     <button id="btnC">Set</button>  
+    <button id="btnD">have passed</button>  
     <input type="number" id="minute" value=0 >
     <input type="number" id="second" value=15 >
 </body>
